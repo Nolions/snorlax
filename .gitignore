@@ -192,3 +192,7 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,intellij+all,gradle,groovy,macos
+
+.settings
+
+.vscode
