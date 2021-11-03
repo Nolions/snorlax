@@ -7,8 +7,8 @@ import tornadofx.*
  */
 class MainView : View("Snorlax") {
     override val root = borderpane {
-        prefWidth = 600.0
-        prefHeight = 600.0
+        prefWidth = 800.0
+        prefHeight = 700.0
 
         // menu bat
         top = vbox {

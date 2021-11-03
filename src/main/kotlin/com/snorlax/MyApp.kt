@@ -1,11 +1,13 @@
 package com.snorlax
 
+import com.snorlax.view.LoginView
 import com.snorlax.view.MainView
 import javafx.scene.image.Image
 import javafx.stage.Stage
 import tornadofx.*
 
-class MyApp : App(MainView::class, Styles::class) {
+class MyApp : App(LoginView::class, Styles::class) {
+
     override fun start(stage: Stage) {
         super.start(stage)
 
