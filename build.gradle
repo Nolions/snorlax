@@ -3,6 +3,9 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version "0.0.10"
 }
+
+apply from: "dependencie.gradle"
+
 group = 'com.snorlax'
 version = '1.0-SNAPSHOT'
 
@@ -10,8 +13,12 @@ repositories {
     mavenCentral()
 }
 
+def env = rootProject.ext.env
+def app = rootProject.ext.app
+def test = rootProject.ext.test
+
 javafx {
-    version = "15.0.1"
+    version = env.javaFX
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
@@ -20,13 +27,16 @@ application {
 }
 
 dependencies {
-    implementation "no.tornado:tornadofx:$tornadofx_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
+    implementation app.tornadoFX
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+
+
+    testImplementation test.kotlinJunit
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = env.jvm
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = env.jvm
 }

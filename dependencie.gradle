@@ -1,0 +1,18 @@
+ext {
+    env = [
+            jvm   : "1.8",
+            javaFX: "15.0.1",
+    ]
+
+    dependency = [
+            tornadoFXVersion: "26.1.0",
+    ]
+
+    app = [
+            tornadoFX: "no.tornado:tornadofx:$tornadofx_version",
+    ]
+
+    test = [
+            kotlinJunit: "org.jetbrains.kotlin:kotlin-test-junit",
+    ]
+}
