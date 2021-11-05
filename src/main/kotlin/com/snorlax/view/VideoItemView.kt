@@ -3,32 +3,31 @@ package com.snorlax.view
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
+import javafx.scene.control.TextArea
 import javafx.scene.image.Image
+import javafx.scene.layout.HBox
 import javafx.scene.layout.Pane
 import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
 
-class VideItemView : View("My View") {
+class VideoItemView : View() {
     private val coverPath = SimpleStringProperty()
     private val coverFile = SimpleObjectProperty<Image>()
 
     private val videoPath = SimpleStringProperty()
     private val videoFile = SimpleObjectProperty<Image>()
 
-    private val coverFilterList = listOf("*.png", "*.png")
+    private val coverFilterList = listOf("*.png", "*.jpg")
     private val videoFilterList = listOf("*.mp4", "*.avi")
 
     private var dirPath = "."
 
     private val name = SimpleStringProperty()
+    private val category = SimpleStringProperty()
 
-    private val categories = FXCollections.observableArrayList(
-        "Tag1",
-        "Tag2", "Tag3", "Tag4", "Tag5"
-    )
-
-    private val selectedCategory = SimpleStringProperty()
+    private val rootWidth = 500.0
+    private val coverLayoutWidth = 100.0
 
     private val defaultCover = Image(
         ClassLoader.getSystemResourceAsStream("ic_picture.png"),
@@ -38,46 +37,51 @@ class VideItemView : View("My View") {
         false
     )
 
+    // mock data
+    private val categories = FXCollections.observableArrayList("分類1", "分類2", "分類3", "分類4", "分類5")
+
     init {
         coverFile.value = defaultCover
     }
 
     override val root = vbox {
-        paddingAll = 8
+        prefWidth = rootWidth
+        paddingAll = 4
         spacing = 4.0
 
         hbox {
+            fitToParentWidth()
             spacing = 4.0
 
-            this += coverView()
-
-            this += mediaParamView()
+            this += coverLayout()
+            this += mediaParamLayoutView()
         }
 
         this += mediaChoseView()
 
-        textarea() {
+        // 影片描述
+        this += mediaDescribeLayout()
+    }
+
+    /**
+     * 影片描述
+     */
+    private fun mediaDescribeLayout(): TextArea {
+        return textarea() {
+            fitToParentWidth()
             prefHeight = 60.0
-            prefWidth = 400.0
         }
     }
 
     /**
-     * 封面選擇View
+     * 封面View
      */
-    private fun coverView(): Pane {
+    private fun coverLayout(): Pane {
         return vbox {
+            fitToParentWidth()
             imageview(coverFile) {
-                fitHeight = 60.0
-                fitWidth = 60.0
-            }
-
-            button("Cover") {
-                prefWidth = 60.0
-                prefHeight = 20.0
-                action {
-                    chooseCover()
-                }
+                fitWidth = coverLayoutWidth
+                fitHeight = fitWidth
             }
         }
     }
@@ -85,20 +89,24 @@ class VideItemView : View("My View") {
     /**
      * 影片參數設置View
      */
-    private fun mediaParamView():Pane {
+    private fun mediaParamLayoutView(): Pane {
+        val viewWidth = rootWidth - coverLayoutWidth
         return vbox {
             spacing = 4.0
-            prefWidth = 340.0
-            textfield(name)
-            combobox(selectedCategory, categories)
-            flowpane {
+            prefWidth = viewWidth
+
+            hbox {
                 spacing = 4.0
-                for (i in 1..10) {
-                    this += checkbox("Tag$i") {
-                        action {
-                            println("Checkbox Tag$i")
-                        }
-                    }
+                // 影片名稱
+                textfield(name) {
+                    prefWidth = viewWidth / 3 * 2
+                    promptText = "影片名稱"
+                }
+
+                // 影片類型
+                combobox(category, categories) {
+                    prefWidth = viewWidth / 3 * 1
+                    promptText = "影片類型"
                 }
             }
         }
@@ -107,17 +115,16 @@ class VideItemView : View("My View") {
     /**
      * 影片選擇View
      */
-    private fun mediaChoseView():Pane {
+    private fun mediaChoseView(): HBox {
         return hbox {
+            fitToParentWidth()
             spacing = 4.0
             textfield(videoPath) {
-                isEditable = false
-                prefWidth = 300.0
+                prefWidth = rootWidth / 4 * 3
             }
 
             button("Video Chose") {
-                prefWidth = 100.0
-
+                prefWidth = rootWidth / 4 * 1
                 action {
                     chooseVideo()
                 }
@@ -125,6 +132,9 @@ class VideItemView : View("My View") {
         }
     }
 
+    /**
+     * 封面圖片選擇
+     */
     private fun chooseCover() {
         val fileChooser = chooserFiles(coverFilterList)
 
@@ -137,6 +147,9 @@ class VideItemView : View("My View") {
         }
     }
 
+    /**
+     * 上傳影片選擇
+     */
     private fun chooseVideo() {
         val fileChooser = chooserFiles(videoFilterList)
 
@@ -148,6 +161,9 @@ class VideItemView : View("My View") {
         }
     }
 
+    /**
+     * 檔案選擇
+     */
     private fun chooserFiles(
         extensions: List<String>,
         title: String = "Chose Image",
