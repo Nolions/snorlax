@@ -3,8 +3,10 @@ package com.snorlax.view
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
+import javafx.event.EventHandler
 import javafx.scene.control.TextArea
 import javafx.scene.image.Image
+import javafx.scene.input.MouseEvent
 import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
@@ -79,8 +81,13 @@ class VideoItemView : View() {
         imageview(coverFile) {
             fitWidth = coverLayoutWidth
             fitHeight = fitWidth
-        }
 
+            addEventHandler(MouseEvent.MOUSE_CLICKED) { event ->
+                println("Tile pressed ")
+                chooseCover()
+                event.consume()
+            }
+        }
     }
 
     /**
