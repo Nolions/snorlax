@@ -42,5 +42,11 @@ class MainView : View("Snorlax") {
                 graphic = VideoItemView().root
             }
         }
+
+        button("開始上傳"){
+            action {
+                log.info("======== Start Update ======== ")
+            }
+        }
     }
 }
