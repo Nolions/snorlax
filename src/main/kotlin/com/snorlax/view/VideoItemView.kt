@@ -5,8 +5,6 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.scene.control.TextArea
 import javafx.scene.image.Image
-import javafx.scene.layout.HBox
-import javafx.scene.layout.Pane
 import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
@@ -76,38 +74,35 @@ class VideoItemView : View() {
     /**
      * 封面View
      */
-    private fun coverLayout(): Pane {
-        return vbox {
-            fitToParentWidth()
-            imageview(coverFile) {
-                fitWidth = coverLayoutWidth
-                fitHeight = fitWidth
-            }
+    private fun coverLayout() = vbox {
+        fitToParentWidth()
+        imageview(coverFile) {
+            fitWidth = coverLayoutWidth
+            fitHeight = fitWidth
         }
+
     }
 
     /**
      * 影片參數設置View
      */
-    private fun mediaParamLayoutView(): Pane {
+    private fun mediaParamLayoutView() = vbox {
         val viewWidth = rootWidth - coverLayoutWidth
-        return vbox {
+        spacing = 4.0
+        prefWidth = viewWidth
+
+        hbox {
             spacing = 4.0
-            prefWidth = viewWidth
+            // 影片名稱
+            textfield(name) {
+                prefWidth = viewWidth / 3 * 2
+                promptText = "影片名稱"
+            }
 
-            hbox {
-                spacing = 4.0
-                // 影片名稱
-                textfield(name) {
-                    prefWidth = viewWidth / 3 * 2
-                    promptText = "影片名稱"
-                }
-
-                // 影片類型
-                combobox(category, categories) {
-                    prefWidth = viewWidth / 3 * 1
-                    promptText = "影片類型"
-                }
+            // 影片類型
+            combobox(category, categories) {
+                prefWidth = viewWidth / 3 * 1
+                promptText = "影片類型"
             }
         }
     }
@@ -115,21 +110,20 @@ class VideoItemView : View() {
     /**
      * 影片選擇View
      */
-    private fun mediaChoseView(): HBox {
-        return hbox {
-            fitToParentWidth()
-            spacing = 4.0
-            textfield(videoPath) {
-                prefWidth = rootWidth / 4 * 3
-            }
+    private fun mediaChoseView() = hbox {
+        fitToParentWidth()
+        spacing = 4.0
+        textfield(videoPath) {
+            prefWidth = rootWidth / 4 * 3
+        }
 
-            button("Video Chose") {
-                prefWidth = rootWidth / 4 * 1
-                action {
-                    chooseVideo()
-                }
+        button("Video Chose") {
+            prefWidth = rootWidth / 4 * 1
+            action {
+                chooseVideo()
             }
         }
+
     }
 
     /**
