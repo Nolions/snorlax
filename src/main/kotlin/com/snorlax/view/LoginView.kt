@@ -43,7 +43,7 @@ class LoginView : View("Login") {
             }
 
             field("Password") {
-                textfield(password)
+                passwordfield(password)
             }
 
             hbox {
