@@ -13,7 +13,10 @@ class MainView : View("Snorlax") {
     private val videos = FXCollections.observableArrayList<Video>()
 
     override val root = borderpane {
-        videos.add(Video())
+        // mock
+        for (i in 1..5) {
+            videos.add(Video())
+        }
 
         prefWidth = 540.0
         prefHeight = 700.0
@@ -37,7 +40,6 @@ class MainView : View("Snorlax") {
 
         listview(videos) {
             prefHeight = 600.0
-//            addClass(Styles.listView)
             selectionModel = NoSelectionModel()
             cellFormat {
                 graphic = VideoItemView().root

@@ -3,8 +3,6 @@ package com.snorlax.view
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
-import javafx.event.EventHandler
-import javafx.scene.control.TextArea
 import javafx.scene.image.Image
 import javafx.scene.input.MouseEvent
 import javafx.stage.FileChooser
@@ -59,18 +57,7 @@ class VideoItemView : View() {
 
         this += mediaChoseView()
 
-        // 影片描述
-        this += mediaDescribeLayout()
-    }
 
-    /**
-     * 影片描述
-     */
-    private fun mediaDescribeLayout(): TextArea {
-        return textarea() {
-            fitToParentWidth()
-            prefHeight = 60.0
-        }
     }
 
     /**
@@ -112,6 +99,13 @@ class VideoItemView : View() {
                 promptText = "影片類型"
             }
         }
+
+        // 影片描述
+        textarea() {
+            fitToParentWidth()
+            prefHeight = 60.0
+            promptText = "影片描述"
+        }
     }
 
     /**
@@ -122,6 +116,7 @@ class VideoItemView : View() {
         spacing = 4.0
         textfield(videoPath) {
             prefWidth = rootWidth / 4 * 3
+            promptText = "選擇影片"
         }
 
         button("Video Chose") {
