@@ -1,6 +1,7 @@
 package com.snorlax.view
 
 import com.snorlax.Styles
+import com.snorlax.lib.NoSelectionModel
 import com.snorlax.model.Video
 import javafx.collections.FXCollections
 import tornadofx.*
@@ -36,8 +37,8 @@ class MainView : View("Snorlax") {
 
         listview(videos) {
             prefHeight = 600.0
-            addClass(Styles.listView)
-
+//            addClass(Styles.listView)
+            selectionModel = NoSelectionModel()
             cellFormat {
                 graphic = VideoItemView().root
             }
